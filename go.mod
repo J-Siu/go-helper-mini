@@ -1,3 +1,3 @@
-module github.com/J-Siu/go-mini-helper
+module github.com/J-Siu/go-helper-mini
 
 go 1.26.5
