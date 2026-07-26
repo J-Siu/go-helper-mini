@@ -26,6 +26,18 @@ import "errors"
 
 type TypeErrs []error
 
+func (t *TypeErrs) Clear() {
+	*t = []error{}
+}
+
+func (t *TypeErrs) Empty() bool {
+	return len(*t) == 0
+}
+
+func (t *TypeErrs) NotEmpty() bool {
+	return len(*t) != 0
+}
+
 func (t *TypeErrs) Queue(prefix string, e error) {
 	if e != nil {
 		var str string
