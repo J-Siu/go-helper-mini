@@ -41,3 +41,27 @@ func Struct2String(prefix string, in any) (s string) {
 	Struct(prefix, in, &s)
 	return
 }
+
+// Return "OK"/"Fail"
+func Ok(b bool) string {
+	if b {
+		return "OK"
+	}
+	return "Fail"
+}
+
+// Return "Success"/"Fail"
+func Success(b bool) string {
+	if b {
+		return "Success"
+	}
+	return "Fail"
+}
+
+// Return "Yes"/"No"
+func YesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}

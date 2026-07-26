@@ -20,22 +20,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package log
+// ezlog provides
+//   - Default logger L=log.Default() and S=slog.Default()
+//   - simple short hand for simple log println
+package ezlog
 
-// log level representation
-type Level int8
-
-// log level
-const (
-	LOG Level = iota - 2 // `LOG` is not exactly a log level. It is for logging regardless of log level
-	DISABLED
-	EMERG
-	ALERT
-	CRIT
-	ERR
-	WARNING
-	NOTICE
-	INFO
-	DEBUG
-	TRACE
+import (
+	"log"
+	"log/slog"
 )
+
+var (
+	L = log.Default()
+	S = slog.Default()
+)
+
+func DebugEnd(debug bool, prefix string) {
+	if debug {
+		L.Println(prefix + ": End")
+	}
+}
+func DebugStart(debug bool, prefix string) {
+	if debug {
+		L.Println(prefix + ": Start")
+	}
+}
