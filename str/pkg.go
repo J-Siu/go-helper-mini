@@ -28,7 +28,7 @@ import "encoding/json"
 func Struct(prefix string, in any, out *string) (err error) {
 	var b []byte
 	if prefix != "" {
-		*out = prefix + ":"
+		*out = prefix + ":" + NewLine
 	}
 	if b, err = json.MarshalIndent(in, "", "  "); err == nil {
 		*out += string(b)
