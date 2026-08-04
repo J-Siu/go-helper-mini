@@ -5,13 +5,13 @@ Provides a simple struct with 5 common fields to be embedded by other structs.
 ## Installation
 
 ```sh
-go get github.com/J-Siu/go-helper-mini
+go get fj.vms.local/jsds/go-helper-mini
 ```
 
 ## Usage
 
 ```go
-import "github.com/J-Siu/go-helper-mini/basestruct"
+import "fj.vms.local/jsds/go-helper-mini/basestruct"
 ```
 
 ## TYPES
