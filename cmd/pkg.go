@@ -30,20 +30,20 @@ import (
 )
 
 // Setup and return MyCmd pointer.
-//   - If <workPathP> is empty/nil, current directory is used.
-func New(cmdName string, argsP *[]string, workPathP *string) *Cmd {
-	return new(Cmd).New(cmdName, argsP, workPathP)
+//   - If <workPath> is empty, current directory is used.
+func New(cmdName string, args []string, workPath string) *Cmd {
+	return new(Cmd).New(cmdName, args, workPath)
 }
 
 // MyCmd run func wrapper.
-//   - If <workPathP> is empty/nil, current directory is used.
-func Run(cmdName string, argsP *[]string, workPathP *string) *Cmd {
-	return RunWg(cmdName, argsP, workPathP, nil, nil, false)
+//   - If <workPath> is empty, current directory is used.
+func Run(cmdName string, args []string, workPath string) *Cmd {
+	return RunWg(cmdName, args, workPath, nil, nil, false)
 }
 
 // MyCmd run func wrapper with sync.WaitGroup support.
-//   - If <workPathP> is empty/nil, current directory is used.
+//   - If <workPath> is empty, current directory is used.
 //   - Print if <output> is true
-func RunWg(cmdName string, argsP *[]string, workPathP *string, title *string, wgP *sync.WaitGroup, output bool) *Cmd {
-	return New(cmdName, argsP, workPathP).RunWg(title, wgP, output)
+func RunWg(cmdName string, args []string, workPath string, title *string, wgP *sync.WaitGroup, output bool) *Cmd {
+	return New(cmdName, args, workPath).RunWg(title, wgP, output)
 }

@@ -10,19 +10,18 @@ import (
 //   - If <workPath> is empty/nil, use current path.
 //   - <workPathP> not modified.
 //   - Return string pointer.
-func FullPath(workPath string) string {
-	var p string
+func FullPath(workPath string) (fullPath string) {
 	if workPath == "" {
 		// Empty return current path
-		p = *CurrentPath()
-	} else if (workPath)[0] == '/' {
+		fullPath = *CurrentPath()
+	} else if workPath[0] == '/' {
 		// Path start with / already full path, return it
-		p = workPath
+		fullPath = workPath
 	} else {
 		// Add to current path
-		p = path.Join(*CurrentPath(), workPath)
+		fullPath = path.Join(*CurrentPath(), workPath)
 	}
-	return p
+	return fullPath
 }
 
 func IsDir(path string) (result bool) {

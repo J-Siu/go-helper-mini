@@ -50,15 +50,15 @@ type Cmd struct {
 
 // Setup and return cmd pointer.
 //   - If <workPathP> is empty/nil, current directory is used.
-func (t *Cmd) New(cmdName string, argsP *[]string, workPathP *string) *Cmd {
+func (t *Cmd) New(cmdName string, args []string, workPath string) *Cmd {
 	t.MyType = "Cmd"
-	t.Args = *argsP
+	t.Args = args
 	t.CmdName = cmdName
 	t.CmdLn = ""
 	t.Err = nil
 	t.ExitCode = 0
 	t.Ran = false
-	t.Dir = file.FullPath(*workPathP)
+	t.Dir = file.FullPath(workPath)
 	t.Stderr = new(bytes.Buffer)
 	t.Stdout = new(bytes.Buffer)
 	return t
