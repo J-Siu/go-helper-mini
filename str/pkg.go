@@ -24,7 +24,8 @@ THE SOFTWARE.
 package str
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"strings"
 )
 
@@ -81,15 +82,20 @@ func ContainsAnySubStringsBool(str string, subStrArrP *[]string, caseSensitive b
 }
 
 func Struct(prefix string, in any, indent bool) (out string, err error) {
-	var b []byte
+	var (
+		b       []byte
+		options = json.JoinOptions(
+			json.Deterministic(true),
+			json.FormatNilMapAsNull(true),
+			json.FormatNilSliceAsNull(true),
+		)
+	)
 	if indent {
-		b, err = json.MarshalIndent(in, "", "  ")
-	} else {
-		b, err = json.Marshal(in)
+		options = json.JoinOptions(options, jsontext.WithIndent("  "))
 	}
-	if err == nil {
+	if b, err = json.Marshal(in, options); err == nil {
 		if prefix != "" {
-			out = prefix + ":" + NewLine + string(b)
+			out = prefix + ": " + AddNewLine(indent) + string(b)
 		} else {
 			out = string(b)
 		}
@@ -97,13 +103,11 @@ func Struct(prefix string, in any, indent bool) (out string, err error) {
 	return
 }
 
-// if json(sonic).MarshalIndent err, return empty
+// Struct2String - wrapper of Struct(). If Struct() return error, return empty string.
 func Struct2String(prefix string, in any, indent bool) (s string) {
 	s, _ = Struct(prefix, in, indent)
 	return
 }
-
-// cspell:words charlievieth
 
 // Return "OK"/"Fail"
 func Ok(b bool) string {
@@ -124,7 +128,7 @@ func SuccessFail(b bool) string {
 // Return "Pass"/"Fail"
 func PassFail(b bool) string {
 	if b {
-		return "PAss"
+		return "Pass"
 	}
 	return "Fail"
 }
@@ -136,3 +140,13 @@ func YesNo(b bool) string {
 	}
 	return "No"
 }
+
+func AddNewLine(add bool) string {
+	if add {
+		return NewLine
+	} else {
+		return ""
+	}
+}
+
+// cspell:words jsontext
