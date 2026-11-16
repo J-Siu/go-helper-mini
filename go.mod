@@ -1,3 +1,3 @@
-module fj.vms.local/jsds/go-helper-mini
+module github.com/J-Siu/go-helper-mini
 
 go 1.26.5

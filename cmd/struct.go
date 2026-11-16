@@ -31,9 +31,9 @@ import (
 	"os/exec"
 	"sync"
 
-	"fj.vms.local/jsds/go-helper-mini/basestruct"
-	"fj.vms.local/jsds/go-helper-mini/file"
-	"fj.vms.local/jsds/go-helper-mini/str"
+	"github.com/J-Siu/go-helper-mini/basestruct"
+	"github.com/J-Siu/go-helper-mini/file"
+	"github.com/J-Siu/go-helper-mini/str"
 )
 
 type Cmd struct {
