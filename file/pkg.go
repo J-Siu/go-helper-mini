@@ -6,6 +6,20 @@ import (
 	"strings"
 )
 
+// Get full path of current directory.
+//   - Return string pointer.
+func CurrentPath() *string {
+	p, _ := os.Getwd()
+	return &p
+}
+
+// Get current directory name. Not full path.
+//   - Return string pointer.
+func CurrentDirBase() *string {
+	p := path.Base(*CurrentPath())
+	return &p
+}
+
 // Return full path of path provided.
 //   - If <workPath> is empty/nil, use current path.
 //   - <workPathP> not modified.
@@ -86,13 +100,6 @@ func WriteStr(filePath string, str *string, perm os.FileMode) error {
 func WriteStrArray(filePath string, strArray *[]string, perm os.FileMode) error {
 	tmp := []byte(strings.Join(*strArray, "\n"))
 	return WriteByte(filePath, &tmp, perm)
-}
-
-// Get full path of current directory.
-//   - Return string pointer.
-func CurrentPath() *string {
-	p, _ := os.Getwd()
-	return &p
 }
 
 // Expand Linux `~` and environment variable in string
