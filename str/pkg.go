@@ -103,6 +103,30 @@ func Struct(prefix string, in any, indent bool) (out string, err error) {
 	return
 }
 
+// *string to *[]string, split by "\n"
+func LnSplit(strP *string) (out []string) {
+	if strP != nil {
+		return strings.Split(*strP, "\n")
+	}
+	return
+}
+
+// return "" if 'strP' is nil, else original string content
+func NilToEmpty(strP *string) string {
+	if strP == nil {
+		return ""
+	}
+	return *strP
+}
+
+// return "nil" if 'strP' is nil, else original string content
+func NilToString(strP *string) string {
+	if strP == nil {
+		return "nil"
+	}
+	return *strP
+}
+
 // Struct2String - wrapper of Struct(). If Struct() return error, return empty string.
 func Struct2String(prefix string, in any, indent bool) (s string) {
 	s, _ = Struct(prefix, in, indent)
