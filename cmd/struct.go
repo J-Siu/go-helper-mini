@@ -26,6 +26,7 @@ package cmd
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log/slog"
 	"os/exec"
@@ -46,6 +47,49 @@ type Cmd struct {
 	Ran      bool          `json:"Ran,omitempty"`      // Out: Set to true by Run()
 	Stderr   *bytes.Buffer `json:"Stderr,omitempty"`   // Out: Stderr
 	Stdout   *bytes.Buffer `json:"Stdout,omitempty"`   // Out: Stdout
+}
+
+// MarshalJSON provides a safe JSON representation of Cmd.
+// bytes.Buffer and error values do not marshal reliably through encoding/json.
+func (t *Cmd) MarshalJSON() ([]byte, error) {
+	type cmdJSON struct {
+		Args        []string `json:"ArgsP,omitempty"`
+		CmdLn       string   `json:"CmdLn,omitempty"`
+		CmdName     string   `json:"CmdName,omitempty"`
+		Debug       bool     `json:"Debug"`
+		Dir         string   `json:"Dir,omitempty"`
+		Err         string   `json:"Err,omitempty"`
+		ExitCode    int      `json:"ExitCode,omitempty"`
+		Initialized bool     `json:"Initialized,omitempty"`
+		LogLevel    uint8    `json:"LogLevel,omitempty"`
+		MyType      string   `json:"MyType"`
+		Ran         bool     `json:"Ran,omitempty"`
+		Stderr      string   `json:"Stderr,omitempty"`
+		Stdout      string   `json:"Stdout,omitempty"`
+	}
+
+	out := cmdJSON{
+		Args:        t.Args,
+		CmdLn:       t.CmdLn,
+		CmdName:     t.CmdName,
+		Debug:       t.Debug,
+		Dir:         t.Dir,
+		ExitCode:    t.ExitCode,
+		Initialized: t.Initialized,
+		LogLevel:    t.LogLevel,
+		MyType:      t.MyType,
+		Ran:         t.Ran,
+	}
+	if t.Err != nil {
+		out.Err = t.Err.Error()
+	}
+	if t.Stderr != nil {
+		out.Stderr = t.Stderr.String()
+	}
+	if t.Stdout != nil {
+		out.Stdout = t.Stdout.String()
+	}
+	return json.Marshal(out)
 }
 
 // Setup and return cmd pointer.
