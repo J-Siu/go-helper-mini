@@ -81,28 +81,6 @@ func ContainsAnySubStringsBool(str string, subStrArrP *[]string, caseSensitive b
 	return result
 }
 
-func Struct(prefix string, in any, indent bool) (out string, err error) {
-	var (
-		b       []byte
-		options = json.JoinOptions(
-			json.Deterministic(true),
-			json.FormatNilMapAsNull(true),
-			json.FormatNilSliceAsNull(true),
-		)
-	)
-	if indent {
-		options = json.JoinOptions(options, jsontext.WithIndent("  "))
-	}
-	if b, err = json.Marshal(in, options); err == nil {
-		if prefix != "" {
-			out = prefix + ": " + AddNewLine(indent) + string(b)
-		} else {
-			out = string(b)
-		}
-	}
-	return
-}
-
 // *string to *[]string, split by "\n"
 func LnSplit(strP *string) (out []string) {
 	if strP != nil {
@@ -125,6 +103,28 @@ func NilToString(strP *string) string {
 		return "nil"
 	}
 	return *strP
+}
+
+func Struct(prefix string, in any, indent bool) (out string, err error) {
+	var (
+		b       []byte
+		options = json.JoinOptions(
+			json.Deterministic(true),
+			json.FormatNilMapAsNull(true),
+			json.FormatNilSliceAsNull(true),
+		)
+	)
+	if indent {
+		options = json.JoinOptions(options, jsontext.WithIndent("  "))
+	}
+	if b, err = json.Marshal(in, options); err == nil {
+		if prefix != "" {
+			out = prefix + ": " + AddNewLine(indent) + string(b)
+		} else {
+			out = string(b)
+		}
+	}
+	return
 }
 
 // Struct2String - wrapper of Struct(). If Struct() return error, return empty string.
